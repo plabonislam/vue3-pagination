@@ -99,7 +99,7 @@ const getCurrentPageData = (data, currentPage) => {
 
 | Name                  | Value                         | Description                                |
 | --------------------- | ----------------------------- | ------------------------------------------ |
-| internal-link-clicked | destination page number       | internal link was clicked                  |
+| getCurrentPageData    | this methods returns current page data list and page number       | internal link was clicked                  |
 | loading-failed        | error object                  | failed to load document                    |
 | loaded                | PDF document proxy            | finished loading the document              |
 | password-requested    | callback function, retry flag | password is needed to display the document |
