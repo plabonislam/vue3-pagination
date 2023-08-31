@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import PaginatePanel from "./PaginatePanel.vue";
+
 
 const accounts = [
   { id: 1, first_name: "Miriam", last_name: "Salmond", gender: "Female" },
