@@ -23,38 +23,45 @@ const propValue = defineProps({
     type: Number,
     required: true,
   },
+  ownState: {
+    type: Number,
+    required: true,
+  },
 });
-onMounted(() => {});
-onUpdated(() => {});
+
+const isActive = ref(false);
 const emit = defineEmits(["pagechanged"]);
 
 const onClickPreviousPage = () => {
-  emit("pagechanged", propValue.currentPage - 1);
+  emit("pagechanged", propValue.currentPage - 1, true);
 };
 const onClickPage = (page) => {
-  emit("pagechanged", page);
+  emit("pagechanged", page, false);
 };
 const onClickNextPage = () => {
-  emit("pagechanged", propValue.currentPage + 1);
+  emit("pagechanged", propValue.currentPage + 1, true);
 };
 
-//
-// const endPage = computed(() => {
-//   return Math.min(startPage.value + maxVisibleButtons - 1, totalPages);
-// });
-// const pages = computed(() => {
-//   const range = [];
-//   for (let i = startPage.value; i <= endPage.value; i += 1) {
-//     range.push({
-//       name: i,
-//     });
-//   }
+const endPage = computed(() => {
+  return Math.min(
+    propValue.currentPage + propValue.maxVisibleButtons - 1,
+    propValue.totalPages
+  );
+});
 
-//   return range;
-// });
+const pages = computed(() => {
+  const maxVisableRange = [];
+  for (let i = propValue.currentPage; i <= endPage.value; i += 1) {
+    maxVisableRange.push({
+      name: i,
+    });
+  }
+
+  return maxVisableRange;
+});
 
 const isInLastPage = computed(() => {
-  return propValue.currentPage === propValue.totalPages;
+  return endPage.value === propValue.totalPages;
 });
 const isInFirstPage = computed(() => {
   return propValue.currentPage === 1;
@@ -73,14 +80,12 @@ const isInFirstPage = computed(() => {
       </button>
     </li>
 
-    <!-- <li v-for="page in pages" :key="page" class="pagination-item">
-      <button type="button" @click="onClickPage(page.name)">
+    <li v-for="page in pages" :key="page" class="pagination-item">
+      <button
+        type="button"
+        @click="onClickPage(page.name)"
+        :class="{ isActive: page.name == ownState }">
         {{ page.name }}
-      </button>
-    </li> -->
-    <li class="pagination-item">
-      <button type="button" class="btn">
-       {{ currentPage }}
       </button>
     </li>
 
@@ -90,7 +95,7 @@ const isInFirstPage = computed(() => {
         class="btn"
         @click="onClickNextPage"
         :disabled="isInLastPage">
-        <img src="/right-arrow.svg"  alt="right logo" />
+        <img src="/right-arrow.svg" alt="right logo" />
       </button>
     </li>
   </ul>
@@ -106,8 +111,7 @@ const isInFirstPage = computed(() => {
 .pagination-item {
   display: inline-block;
 }
-
-
-
-
+.isActive {
+  border: 1px solid green;
+}
 </style>

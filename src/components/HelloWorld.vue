@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import PaginatePanel from "./PaginatePanel.vue";
 
-const accounts = ref([
+const accounts = [
   { id: 1, first_name: "Miriam", last_name: "Salmond", gender: "Female" },
   { id: 2, first_name: "Brittni", last_name: "Vegas", gender: "Agender" },
   { id: 3, first_name: "Stinky", last_name: "Pilipets", gender: "Male" },
@@ -23,24 +23,20 @@ const accounts = ref([
   { id: 18, first_name: "Karita", last_name: "Gibbens", gender: "Female" },
   { id: 19, first_name: "Griffy", last_name: "Jerisch", gender: "Male" },
   { id: 20, first_name: "Seline", last_name: "McLeary", gender: "Female" },
-]);
+];
 
-const dataList = ref(null);
-const recentPage = ref(1);
-const totalPage = ref(0);
+//must be reactive
+const paginatedAccounts = ref(null);
 const perPageItem = ref(2);
 
-totalPage.value = Math.ceil(accounts.value.length / perPageItem.value);
-
 const getCurrentPageData = (data, currentPage) => {
-  dataList.value = data;
-  recentPage.value = currentPage;
+  paginatedAccounts.value = data;
 };
 </script>
 
 <template>
   <div>
-    <li v-for="item in dataList">
+    <li v-for="item in paginatedAccounts">
       {{ item.first_name }}
     </li>
   </div>
@@ -48,7 +44,6 @@ const getCurrentPageData = (data, currentPage) => {
   <PaginatePanel
     :perPage="perPageItem"
     :dataList="accounts"
+    :maxVisibleButtons="3"
     @getCurrentPageData="getCurrentPageData" />
 </template>
-
-
