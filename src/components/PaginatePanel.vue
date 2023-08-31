@@ -19,7 +19,7 @@ const propValue = defineProps({
     type: Number,
     default: 1,
   },
-  isStartingpage: {
+  isStartingPage: {
     type: Boolean,
     default: false,
   },
@@ -40,7 +40,7 @@ onUpdated(() => {
 });
 
 watch(manupulatedPage, () => {
-  if (propValue.isStartingpage) {
+  if (propValue.isStartingPage) {
     currentPage.value = propValue.startingPage;
   }
   let end = currentPage.value * propValue.perPage;
