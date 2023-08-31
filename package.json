@@ -1,0 +1,27 @@
+{
+  "name": "vue-hello-test-component-plugin-01",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/test.umd.cjs",
+  "module": "./dist/test.js",
+  "exports": {
+    ".": {
+      "import": "./dist/test.js",
+      "require": "./dist/test.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.5"
+  }
+}
