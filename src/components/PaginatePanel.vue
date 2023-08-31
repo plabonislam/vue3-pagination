@@ -1,5 +1,4 @@
 <script setup>
-
 import { ref, onUpdated, onMounted, nextTick, watch } from "vue";
 
 const propValue = defineProps({
@@ -32,11 +31,12 @@ const currentPage = ref(1);
 const manupulatedPage = ref(0);
 
 onMounted(() => {
-  manupulatedPage.value = 1;
+  if (propValue.dataList?.length > 0) manupulatedPage.value = 1;
 });
 
 onUpdated(() => {
-  manupulatedPage.value = manupulatedPage.value + 1;
+  if (propValue.dataList?.length > 0)
+    manupulatedPage.value = manupulatedPage.value + 1;
 });
 
 watch(manupulatedPage, () => {
@@ -47,12 +47,13 @@ watch(manupulatedPage, () => {
   let start = (currentPage.value - 1) * propValue.perPage;
   emit(
     "getCurrentPageData",
-    propValue.dataList.slice(start, end),
+    propValue.dataList?.slice(start, end),
     currentPage.value
   );
 });
 
 const onPageChange = (page) => {
+  if (propValue.dataList?.length < 1) return;
   if (!propValue.isDisabledPageChange) {
     currentPage.value = page;
     manupulatedPage.value = manupulatedPage.value + 1;
@@ -76,5 +77,5 @@ const forceRerender = async () => {
     :per-page="perPage"
     :currentPage="currentPage"
     @pagechanged="onPageChange"
-    v-if="renderComponent" />
+    v-if="renderComponent && dataList?.length" />
 </template>
